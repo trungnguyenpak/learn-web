@@ -1,0 +1,6 @@
+Must to start json-server
+Go to html/12_firebase_hosting/public and start json-server
+	json-server --watch db.json --port 9081
+
+Go to url https://fir-hosting-demo-207b0.firebaseapp.com/
+--End--

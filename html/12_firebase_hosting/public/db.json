@@ -1,0 +1,16 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "content": "Tuấn Kid 301"
+    },
+    {
+      "id": 2,
+      "content": "Khang Trần 301"
+    },
+    {
+      "id": 3,
+      "content": "Hữu Trung 301"
+    }
+  ]
+}
