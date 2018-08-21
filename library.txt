@@ -1,0 +1,7 @@
+-static-server: server browse
+-ngrok: tunnel server browse to outside
+-json-server: server api, responde json data
+-axios: request api to server
+
+package:
+-readline-sync

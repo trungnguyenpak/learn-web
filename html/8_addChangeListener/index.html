@@ -1,0 +1,55 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>InnerHTML property</title>
+    </head>
+    <body>
+        <input type="text" id="new-item" onkeypress="onEnterPress()"/>
+        <button id="add-btn"> Add </button>
+        <div>
+            <ul id="todo-list">
+            </ul>
+        </div>
+
+        <script>
+            var data = [
+                'Take shower',
+                'Have a walk',
+                'Go to bed'
+            ]
+            var addBtn = document.getElementById('add-btn');
+            // addBtn.onclick = addItem;
+            addBtn.addEventListener('click', addItem);
+            
+            function onEnterPress(){
+                if(event.key === 'Enter'){
+                    addItem();
+                }
+            }
+
+            function addItem(){
+                var input = document.getElementById('new-item');
+                var newItem = input.value;
+
+                data.push(newItem);
+                render();
+                input.value = '';
+                
+            }
+
+            function render(){
+                var todoUlTag = document.getElementById('todo-list');
+            
+                var content = data.map((item)=>{
+                return '<li>' + item + '</li>';
+                });
+                todoUlTag.innerHTML = content.join('');
+            }
+            render();
+
+        </script>
+    </body>
+    </html>

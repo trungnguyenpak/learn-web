@@ -1,0 +1,12 @@
+* Vào thư mục chưa project
+
+Dùng static-server
+ - static-server
+or
+ - static-server -p {port}
+
+Dùng NGROK
+ 1.start server local trước
+ 2.start ngrok
+ - ngrok http {port server local}
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AJAX</title>
+</head>
+
+<body>
+    <input type="text" id="new-item" onkeypress="onEnterPress()" />
+    <button id="add-btn"> Add </button>
+    <div>
+        <ul id="todo-list">
+        </ul>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        //var storageKey = 'todo-list';
+        var apilink = 'http://localhost:9081/todos';
+        var data = [];
+        var input = document.getElementById('new-item');
+        var addBtn = document.getElementById('add-btn');
+        var todoUlTag = document.getElementById('todo-list');
+
+        // addBtn.onclick = addItem;
+        addBtn.addEventListener('click', addItem);
+        input.addEventListener('change', updateSessionStorage);
+
+        function updateSessionStorage() {
+            sessionStorage.setItem(inputKey, input.value);
+        }
+
+        function onEnterPress() {
+            if (event.key === 'Enter') {
+                addItem();
+            }
+        }
+
+        function addItem() {
+            let todo = {
+                'id': Math.random(),
+                'content': input.value
+            }
+            //post: add todo to server 
+            addTodoToServer(todo);
+            input.value = '';
+        }
+
+        function addTodoToServer(todo) {
+            axios.post(apilink, todo)
+                .then(function (response) {
+                    render();
+                })
+                .catch(function (error) {
+                    alert('Lỗi server');
+                });
+        }
+
+        //use axios and async await
+        async function getToDosFromServer() {
+            try {
+                const result = await axios.get(apilink);
+                data = result.data;
+                showData();
+            } catch (error) {
+                alert('Lỗi server');
+            }
+        }
+
+        function render() {
+            //use axios and async await
+            getToDosFromServer();
+        }
+
+        function showData() {
+            var content = data.map(function (item) {
+                return '<li>' + item.content + '</li>';
+            });
+            todoUlTag.innerHTML = content.join('');
+        }
+        render();
+
+    </script>
+</body>
+
+</html>
