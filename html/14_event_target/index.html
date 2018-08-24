@@ -1,0 +1,67 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>InnerHTML property</title>
+    </head>
+    <body>
+        <input type="text" id="new-item" onkeypress="onEnterPress()"/>
+        <button id="add-btn"> Add </button>
+        <div>
+            <ul id="todo-list">
+            </ul>
+        </div>
+
+        <script>
+            var storageKey = 'todo-list';
+            var data = [];
+            var addBtn = document.getElementById('add-btn');
+            var todoUlTag = document.getElementById('todo-list');
+            
+            // addBtn.onclick = addItem;
+            addBtn.addEventListener('click', addItem);
+            todoUlTag.addEventListener('click', onClickEditButton);
+
+            function onClickEditButton(event){
+                let target = event.target;
+                if(target.id == "edit-data"){ //click edit button
+                    let id = target.dataset.id; // value id
+                    window.location.href = '/edit-item.html#' + id;
+                    sessionStorage.setItem('id', id);
+                }
+            }
+
+            function onEnterPress(){
+                if(event.key === 'Enter'){
+                    addItem();
+                }
+            }
+
+            function addItem(){
+                var input = document.getElementById('new-item');
+                var newItem = input.value;
+
+                data.push(newItem);
+                input.value = '';
+                //data local storage
+                localStorage.setItem(storageKey, JSON.stringify(data));
+                render();                
+            }
+
+            function render(){
+                var stringContent = localStorage.getItem(storageKey);
+                if(stringContent !== null){
+                    data = JSON.parse(stringContent);                    
+                }
+                var content = data.map(function(item, index){
+                    return '<li>' + item + '  <button data-id="' + index + '" id="edit-data">Edit</button></li>';
+                });
+                todoUlTag.innerHTML = content.join('');
+            }
+            render();
+
+        </script>
+    </body>
+    </html>

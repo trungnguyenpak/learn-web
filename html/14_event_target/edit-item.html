@@ -1,0 +1,38 @@
+<div>
+   <input type="text" id="input" onkeypress="onEnterPress()"/>
+   <button id="edit-item">Edit</button>
+</div>
+
+<script>
+   var data = [];
+   var storageKey = 'todo-list';
+   var input = document.getElementById('input');
+   var btnEdit = document.getElementById('edit-item');
+   btnEdit.addEventListener('click', onClickEditButton);
+   var id = parseInt(sessionStorage.getItem('id'));
+   function readDataFromLocalStorage() {
+      var stringContent = localStorage.getItem(storageKey);
+      if (stringContent !== null) {
+         data = JSON.parse(stringContent);
+      }
+   }
+
+   function onEnterPress(){
+      if(event.key === 'Enter'){
+         onClickEditButton();
+      }
+   }
+
+   function onClickEditButton() {
+      data[id] = input.value;
+      localStorage.setItem(storageKey, JSON.stringify(data));
+      window.location = '/';
+      sessionStorage.clear();
+   }
+
+   function render() {
+      readDataFromLocalStorage();
+      input.value = data[id];
+   }
+   render();
+</script>
